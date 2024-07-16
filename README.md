@@ -1,6 +1,11 @@
 # asfa
 
+L’ASFA est une association qui a pour objectif de créer du lien entre les personnes. Nous œuvrons pour lutter contre l’isolement social et pour rapprocher les individus autour de centres d’intérêts communs et divers.
+
+
 This application was generated using JHipster 8.4.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.4.0](https://www.jhipster.tech/documentation-archive/v8.4.0).
+
+
 
 ## Project Structure
 
@@ -48,7 +53,7 @@ Npm is also used to manage CSS and JavaScript dependencies used in this applicat
 specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
 
-The `npm run` command will list all of the scripts available to run for this project.
+The `npm run` command will list all the scripts available to run for this project.
 
 ### PWA Support
 
@@ -56,8 +61,7 @@ JHipster ships with PWA (Progressive Web App) support, and it's turned off by de
 
 The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.config.ts`:
 
-```typescript
-ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+
 ```
 
 ### Managing dependencies
