@@ -1,0 +1,90 @@
+// Enums
+enum ProductTypeEnum {
+  VIRTUAL,
+  REAL
+}
+
+enum FamilyRank {
+  PRIMARY_GUARDIAN,
+  SPOUSE,
+  CHILDREN
+}
+
+// Entities
+entity SubscriptionType {
+  label String required maxlength(100),
+  summary String maxlength(255)
+}
+
+entity Member {
+  memberUID UUID,
+  firstName String required maxlength(50),
+  lastName String required maxlength(50),
+  middleName String maxlength(50),
+  email String required maxlength(60),
+  country String required maxlength(50),
+  city String required maxlength(50),
+  address String required maxlength(250),
+  zipCode String required maxlength(5),
+  birthDate LocalDate required,
+  signupDate LocalDate required,
+  rank FamilyRank required
+}
+
+entity Category {
+  label String required maxlength(100),
+  summary String maxlength(255)
+}
+
+entity Product {
+  productUID UUID,
+  contractNumber String required maxlength(255),
+  startDate LocalDate required,
+  endDate LocalDate,
+  summary String maxlength(255),
+  productType ProductTypeEnum required,
+}
+
+entity Payment {
+  paymentUID UUID,
+  paymentDate LocalDate required,
+  amount Float required,
+  timeStamp Instant required
+}
+
+entity MemberSubscription {
+  subscriptionDate LocalDate required
+}
+
+entity PaymentMethod {
+  label String required maxlength(100)
+}
+
+// Relationships
+relationship OneToMany {
+  Member{familyMembers} to Member
+}
+relationship OneToMany {
+  Payment{MemberSubscription} to MemberSubscription{payment}
+}
+relationship OneToMany {
+  MemberSubscription{members} to Member{subscription}
+}
+relationship OneToMany {
+  MemberSubscription{types} to SubscriptionType{subscription}
+}
+relationship OneToMany {
+  MemberSubscription{products} to Product{subscription}
+}
+relationship OneToMany {
+  Product{categories} to Category{product}
+}
+
+relationship OneToMany {
+  Payment{methods} to PaymentMethod{payment}
+}
+
+// Options
+paginate Member, SubscriptionType, MemberSubscription, Category, Product, Payment, PaymentMethod with pagination
+dto * with mapstruct
+service * with serviceClass
