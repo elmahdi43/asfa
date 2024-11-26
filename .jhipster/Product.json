@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "changelogDate": "20241126162936"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "productUID",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "contractNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "summary",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "productType",
+      "fieldType": "ProductTypeEnum",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "VIRTUAL,REAL"
+    }
+  ],
+  "name": "Product",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "categories",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "memberSubscription",
+      "otherEntityRelationshipName": "products",
+      "relationshipName": "subscription",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

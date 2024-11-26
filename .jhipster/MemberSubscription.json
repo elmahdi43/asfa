@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20241126162933"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "subscriptionDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "MemberSubscription",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "member",
+      "otherEntityRelationshipName": "subscription",
+      "relationshipName": "members",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "subscriptionType",
+      "otherEntityRelationshipName": "subscription",
+      "relationshipName": "types",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "subscription",
+      "relationshipName": "products",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "payment",
+      "otherEntityRelationshipName": "memberSubscription",
+      "relationshipName": "payment",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

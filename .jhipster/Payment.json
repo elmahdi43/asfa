@@ -1,0 +1,48 @@
+{
+  "annotations": {
+    "changelogDate": "20241126162934"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "paymentUID",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "paymentDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timeStamp",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Payment",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "memberSubscription",
+      "otherEntityRelationshipName": "payment",
+      "relationshipName": "memberSubscription",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "paymentMethod",
+      "otherEntityRelationshipName": "payment",
+      "relationshipName": "methods",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
