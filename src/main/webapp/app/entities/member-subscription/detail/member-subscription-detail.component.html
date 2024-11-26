@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (memberSubscription(); as memberSubscriptionRef) {
+      <div>
+        <h2 data-cy="memberSubscriptionDetailsHeading"><span>Member Subscription</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ memberSubscriptionRef.id }}</span>
+          </dd>
+          <dt><span>Subscription Date</span></dt>
+          <dd>
+            <span>{{ memberSubscriptionRef.subscriptionDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span>Payment</span></dt>
+          <dd>
+            @if (memberSubscription()!.payment) {
+              <div>
+                <a [routerLink]="['/payment', memberSubscription()!.payment?.id, 'view']">{{ memberSubscriptionRef.payment?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/member-subscription', memberSubscriptionRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
