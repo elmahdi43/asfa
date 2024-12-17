@@ -1,0 +1,80 @@
+name: CI/CD Pipeline for ASFA Manager
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - sonarqube-impl
+#  pull_request:
+#    branches:
+#      - main
+#      - master
+
+jobs:
+  build-and-test:
+    name: Build and Test JHipster App
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16.4
+        env:
+          POSTGRES_USER: asfa
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U asfa"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up JDK
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Step 3: Install Node.js for Frontend
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step 4: Install frontend dependencies
+      - name: Install Frontend Dependencies
+        run: |
+          npm install
+          npm run build --if-present
+
+      # Step 5: Build and Test Backend with Maven
+      - name: Build and Test Backend
+        run: |
+          ./mvnw clean verify -DskipTests=false
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/asfa
+          SPRING_DATASOURCE_USERNAME: asfa
+          SPRING_DATASOURCE_PASSWORD: password
+
+      # Step 6: Archive test results
+      - name: Archive Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test Results
+          path: target/surefire-reports/
+
+      # Step 7: Upload JAR Artifact
+      - name: Upload Application Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jhipster-app
+          path: target/*.jar
